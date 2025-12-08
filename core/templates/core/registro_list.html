@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1>Mis Registros</h1>
+    <a href="{% url 'registro_create' %}" class="btn btn-primary">+ Nuevo Registro</a>
+</div>
+
+{% if registros %}
+{% for registro in registros %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div>
+            <h3 style="margin: 0 0 0.5rem 0;">{{ registro.titulo }}</h3>
+            <p style="color: var(--text-light); margin: 0;">{{ registro.descripcion }}</p>
+            <small style="color: #94a3b8;">{{ registro.fecha_creacion|date:"d M Y H:i" }}</small>
+        </div>
+        <div>
+            <a href="{% url 'registro_update' registro.pk %}"
+                style="color: var(--primary); margin-right: 0.5rem;">Editar</a>
+            <a href="{% url 'registro_delete' registro.pk %}" style="color: var(--danger);">Eliminar</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card" style="text-align: center; padding: 3rem;">
+    <p>No tienes registros aún.</p>
+    <a href="{% url 'registro_create' %}" class="btn btn-primary">Crear el primero</a>
+</div>
+{% endif %}
+{% endblock %}
